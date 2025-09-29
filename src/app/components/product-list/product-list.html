@@ -1,0 +1,15 @@
+<h2>Product List</h2>
+
+@for (product of products; track product.ID) {
+<div class="card m-2 p-2">
+    <img [src]="product.Img" width="100" />
+    <h5>{{ product.Name }}</h5>
+
+    <button class="btn btn-primary" (click)="viewDetails(product)">View Details</button>
+
+    @if (selectedProduct?.ID === product.ID) {
+    <app-product-detail [product]="selectedProduct!" (close)="closeDetails()">
+    </app-product-detail>
+    }
+</div>
+}
