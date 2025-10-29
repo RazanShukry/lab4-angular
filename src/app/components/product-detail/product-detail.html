@@ -1,6 +1,8 @@
-<div class="card">
-    <h4>{{ product.Name }}</h4>
-    <p>Price: {{ product.Price | currency }}</p>
-    <p>Quantity: {{ product.Quantity }}</p>
-    <button (click)="closeDetails()">Close</button>
-</div>
+@if (product; as p) {
+<h2>{{ p.Name }}</h2>
+<img [src]="p.Img" width="150">
+<p>Price: {{ p.Price }} EGP</p>
+<p>Category ID: {{ p.CateogryID }}</p>
+} @else {
+<p>Product not found.</p>
+}

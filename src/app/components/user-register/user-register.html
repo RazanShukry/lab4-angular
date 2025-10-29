@@ -1,0 +1,70 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="mb-3">
+        <label>Full Name</label>
+        <input type="text" class="form-control" formControlName="fullName"
+            [ngClass]="{ 'is-invalid': submitted && f['fullName'].errors, 'is-valid': f['fullName'].valid }" />
+        <div *ngIf="submitted && f['fullName'].errors" class="invalid-feedback">
+            <div *ngIf="f['fullName'].errors['required']">Full name is required.</div>
+            <div *ngIf="f['fullName'].errors['minlength']">Minimum 5 characters.</div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input type="email" class="form-control" formControlName="email"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors, 'is-valid': f['email'].valid }" />
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+            <div *ngIf="f['email'].errors['required']">Email is required.</div>
+            <div *ngIf="f['email'].errors['email']">Invalid email format.</div>
+            <div *ngIf="f['email'].errors['pattern']">Email pattern is incorrect.</div>
+        </div>
+    </div>
+
+    <div formArrayName="mobiles" *ngFor="let mobile of mobiles.controls; let i = index" class="mb-3">
+        <label>Mobile {{ i + 1 }}</label>
+        <input type="text" class="form-control" [formControlName]="i"
+            [ngClass]="{ 'is-invalid': submitted && mobile.errors, 'is-valid': mobile.valid }" />
+        <div *ngIf="submitted && mobile.errors" class="invalid-feedback">
+            <div *ngIf="mobile.errors['required']">Mobile is required.</div>
+            <div *ngIf="mobile.errors['pattern']">Invalid mobile format.</div>
+        </div>
+        <button *ngIf="i > 0" type="button" class="btn btn-danger btn-sm mt-1" (click)="removeMobile(i)">Remove</button>
+    </div>
+
+    <button type="button" class="btn btn-secondary mb-3" (click)="addMobile()">Add Another Mobile</button>
+
+    <div class="mb-3">
+        <label>Password</label>
+        <input type="password" class="form-control" formControlName="password"
+            [ngClass]="{ 'is-invalid': submitted && f['password'].errors, 'is-valid': f['password'].valid }" />
+        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+            <div *ngIf="f['password'].errors['required']">Password is required.</div>
+            <div *ngIf="f['password'].errors['minlength']">Minimum 6 characters.</div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Confirm Password</label>
+        <input type="password" class="form-control" formControlName="confirmPassword" [ngClass]="{
+        'is-invalid': submitted && (f['confirmPassword'].errors || registerForm.errors?.['mismatch']),
+        'is-valid': f['confirmPassword'].valid && !registerForm.errors?.['mismatch']
+      }" />
+        <div *ngIf="submitted && (f['confirmPassword'].errors || registerForm.errors?.['mismatch'])"
+            class="invalid-feedback">
+            <div *ngIf="f['confirmPassword'].errors?.['required']">Confirm password is required.</div>
+            <div *ngIf="registerForm.errors?.['mismatch']">Passwords do not match.</div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="button" class="btn btn-warning ms-2" (click)="resetForm()">Reset</button>
+</form>
+
+<div *ngIf="registeredUser" class="card mt-4">
+    <div class="card-body">
+        <h5 class="card-title">Registered User</h5>
+        <p><strong>Name:</strong> {{ registeredUser.fullName }}</p>
+        <p><strong>Email:</strong> {{ registeredUser.email }}</p>
+        <p><strong>Mobiles:</strong> {{ registeredUser.mobiles.join(', ') }}</p>
+    </div>
+</div>

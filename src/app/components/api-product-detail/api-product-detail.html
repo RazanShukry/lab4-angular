@@ -1,0 +1,14 @@
+<div *ngIf="isLoading">Loading product details...</div>
+
+<div *ngIf="errorMessage" class="text-danger">
+    {{ errorMessage }}
+</div>
+
+<div *ngIf="product && !isLoading" class="card p-3">
+    <h3>{{ product.Name }}</h3>
+    <p><strong>Price:</strong> {{ product.Price | currency:'EGP' }}</p>
+    <p><strong>Quantity:</strong> {{ product.Quantity }}</p>
+    <p><strong>Category:</strong> {{ product.CateogryID }}</p>
+
+    <button routerLink="/api-products" class="btn btn-secondary mt-3">← Back to Products</button>
+</div>

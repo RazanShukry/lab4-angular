@@ -1,0 +1,29 @@
+<div class="container mt-4">
+    <h2>Search Products</h2>
+
+    <div class="input-group mb-3">
+        <input [(ngModel)]="keyword" class="form-control" placeholder="Search products..." />
+        <button class="btn btn-primary" (click)="searchProducts()">Search</button>
+    </div>
+
+    <div *ngIf="loading" class="text-center">Loading...</div>
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+    <div class="row mt-4" *ngIf="products.length">
+        <div class="col-md-4 mb-3" *ngFor="let p of products">
+            <div class="card h-100">
+                <img [src]="p.thumbnail" class="card-img-top" alt="{{ p.title }}" />
+                <div class="card-body">
+                    <h5 class="card-title">{{ p.title }}</h5>
+                    <p class="card-text">{{ p.description }}</p>
+                    <p class="fw-bold">Price: ${{ p.price }}</p>
+                    <span class="badge bg-secondary">{{ p.category }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!loading && !products.length && !error" class="text-muted text-center mt-3">
+        No products found yet.
+    </div>
+</div>

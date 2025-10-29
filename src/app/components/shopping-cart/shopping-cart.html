@@ -1,0 +1,19 @@
+<div class="mb-3">
+    <input [(ngModel)]="searchText" class="form-control" placeholder="Search products..." />
+</div>
+
+<div class="row">
+    @for (product of filteredProducts; track product.ID) {
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <img [src]="product.Img" class="card-img-top" alt="{{ product.Name }}" />
+            <div class="card-body">
+                <h5 class="card-title">{{ product.Name }}</h5>
+                <p class="card-text">Price: {{ product.Price }}</p>
+                <p class="card-text">Quantity: {{ product.Quantity }}</p>
+                <button class="btn btn-info" (click)="goToDetails(product.ID)">Details</button>
+            </div>
+        </div>
+    </div>
+    }
+</div>
